@@ -1,0 +1,15 @@
+export const firebaseErrorMessages = {
+  "auth/invalid-email": "Correo no válido",
+  "auth/user-disabled": "Usuario deshabilitado",
+  "auth/user-not-found": "No existe una cuenta con este correo",
+  "auth/wrong-password": "Contraseña incorrecta",
+  "auth/email-already-in-use": "Este correo ya está registrado",
+  "auth/weak-password": "La contraseña es demasiado débil",
+  "auth/too-many-requests": "Demasiados intentos. Intenta más tarde",
+  "auth/operation-not-allowed": "Método de autenticación no permitido",
+  "auth/invalid-credential": "Credenciales inválidas. Intenta iniciar sesión de nuevo",
+  "auth/account-exists-with-different-credential": "Ya existe una cuenta con otro método de login",
+  "auth/popup-closed-by-user": "Inicio de sesión cancelado",
+  "auth/cancelled-popup-request": "Inicio de sesión cancelado",
+  "auth/network-request-failed": "Error de red. Verifica tu conexión",
+};
