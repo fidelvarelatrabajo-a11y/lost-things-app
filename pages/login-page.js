@@ -15,13 +15,6 @@ export function LoginScreen({ navigation }) {
       Alert.alert('Error', 'Completa todos los campos');
       return;
     }
-
-    // Aquí validamos credenciales (ejemplo básico)
-    if (email === 'test@mail.com' && password === '1234') {
-      navigation.replace('Inicio'); // reemplaza para que no vuelva al login
-    } else {
-      Alert.alert('Error', 'Correo o contraseña incorrectos');
-    }
   //Nos conectamos con la base de datos 
     try{
       const userData = await signInWithEmailAndPassword (auth,email,password);
