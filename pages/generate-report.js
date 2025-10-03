@@ -34,37 +34,41 @@ export function GenerateReportPage (){
      let loc = await Location.getCurrentPositionAsync({});
      setLocation(loc.coords);
   };
-    // Subir imagen a Firebase
+    // Subir imagen a Cloudinary
   const uploadImageAsync = async (uri) => {
-    try {
-    // Convertir file:// URI en blob
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function (e) {
-        reject(new TypeError("No se pudo convertir la imagen a blob"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", uri, true);
-      xhr.send(null);
-    });
+  const UPLOAD_PRESET = "lost_of_things";
+  const CLOUD_NAME = "dz1bc5yta";
+  const fileName = Date.now() + '.jpg';
+  const data = new FormData();
+  data.append("file", {
+    uri: uri,
+    type: "image/jpeg", // ajusta según tu tipo de imagen
+    name: fileName,
+  });
+  data.append("upload_preset", UPLOAD_PRESET);
 
-    const filename = Date.now() + ".jpg";
-    const storageRef = ref(storage, "reports/" + filename);
+  try {
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+      {
+        method: "POST",
+        body: data,
+      }
+    );
 
-    // Subir la imagen
-    await uploadBytes(storageRef, blob);
+    const json = await response.json();
 
-    // Obtener URL de descarga
-    const url = await getDownloadURL(storageRef);
+    if (json.error) {
+      console.error("Error subiendo imagen a Cloudinary:", json.error);
+      throw new Error(json.error.message);
+    }
 
-    console.log("Imagen subida correctamente:", url);
-    return url;
+    console.log("Imagen subida correctamente:", json.secure_url);
+    return json.secure_url; // URL pública de la imagen
+
   } catch (error) {
-    console.error("Error subiendo la imagen:", error);
-    throw error;
+    console.error("Error subiendo imagen:", error);
+    throw error; // para que puedas manejarlo donde llames la función
   }
   };
 
