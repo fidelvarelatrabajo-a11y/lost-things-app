@@ -34,19 +34,30 @@ export function GenerateReportPage (){
      let loc = await Location.getCurrentPositionAsync({});
      setLocation(loc.coords);
   };
+
+  const uriToBlob = async (uri) => {
+  return await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function() {
+      reject(new Error("No se pudo convertir la imagen a blob"));
+    };
+    xhr.responseType = 'blob';
+    xhr.open('GET', uri, true);
+    xhr.send(null);
+  });
+};
+
     // Subir imagen a Cloudinary
   const uploadImageAsync = async (uri) => {
-  const UPLOAD_PRESET = "lost_of_things";
-  const CLOUD_NAME = "dz1bc5yta";
-  const fileName = Date.now() + '.jpg';
+  const UPLOAD_PRESET = 'lost_of_things';
+  const CLOUD_NAME = 'dz1bc5yta';
+  const blob = await uriToBlob(uri);
   const data = new FormData();
-  data.append("file", {
-    uri: uri,
-    type: "image/jpeg", // ajusta según tu tipo de imagen
-    name: fileName,
-  });
-  data.append("upload_preset", UPLOAD_PRESET);
-
+  data.append('file',blob);
+  data.append('upload_preset', UPLOAD_PRESET);
   try {
     const response = await fetch(
       `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
@@ -55,7 +66,6 @@ export function GenerateReportPage (){
         body: data,
       }
     );
-
     const json = await response.json();
 
     if (json.error) {
