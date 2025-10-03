@@ -36,13 +36,36 @@ export function GenerateReportPage (){
   };
     // Subir imagen a Firebase
   const uploadImageAsync = async (uri) => {
-    const response = await fetch(uri);
-    const blob = await response.blob();
+    try {
+    // Convertir file:// URI en blob
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        reject(new TypeError("No se pudo convertir la imagen a blob"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+
     const filename = Date.now() + ".jpg";
     const storageRef = ref(storage, "reports/" + filename);
 
+    // Subir la imagen
     await uploadBytes(storageRef, blob);
-    return await getDownloadURL(storageRef);
+
+    // Obtener URL de descarga
+    const url = await getDownloadURL(storageRef);
+
+    console.log("Imagen subida correctamente:", url);
+    return url;
+  } catch (error) {
+    console.error("Error subiendo la imagen:", error);
+    throw error;
+  }
   };
 
   // Guardar reporte en Firestore
