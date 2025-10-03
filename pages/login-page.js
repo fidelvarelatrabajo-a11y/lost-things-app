@@ -1,7 +1,6 @@
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Alert } from "react-native";
 import { useState } from "react";
 import { styles } from "../styles/styles";
-import { Alert } from "react-native";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword} from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';

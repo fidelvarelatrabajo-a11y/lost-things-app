@@ -1,4 +1,4 @@
-import { Text, TextInput, TouchableOpacity, View, Image } from "react-native"
+import { Text, TextInput, TouchableOpacity, View, Image, Alert } from "react-native"
 import { styles } from "../styles/styles"
 import { useState } from "react"
 import * as ImagePicker from "expo-image-picker";
@@ -48,11 +48,11 @@ export function GenerateReportPage (){
   // Guardar reporte en Firestore
   const saveReport = async () => {
     if (!image || !description || !location) {
-      alert("Falta información");
-      console.log('Falta información')
+      Alert.alert('Error','Falta informacion por agregar');
+      console.log('Falta información');
       return;
     }
-
+try{
   const imageUrl = await uploadImageAsync(image);
 
     await addDoc(collection(db, "reportes"), {
@@ -63,6 +63,11 @@ export function GenerateReportPage (){
     });
 
     alert("Reporte guardado ✅");
+    Alert.alert('Registro exitoso','Se realizo de manera correcta el registro del reporte');
+  }catch(e){
+    console.log('Existio un error', e);
+    Alert.alert('Error','Ocurrio un error al realizar el reporte');
+  }
   };
   return (
     <View style={styles.container}>

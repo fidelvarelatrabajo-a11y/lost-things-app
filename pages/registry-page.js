@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { styles } from "../styles/styles";
-import { Text,TextInput, TouchableOpacity,View } from "react-native";
+import { Alert, Text,TextInput, TouchableOpacity,View } from "react-native";
 import { doc, setDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth,db } from "../firebase";
@@ -40,9 +40,11 @@ export function RegisterPage (){
             carrera,
             whatsApp
         })
-        console.log('Registro exitosoooooo')
+        console.log('Registro exitosoooooo');
+        Alert.alert('Registro Exitoso', 'Para ingresar a la aplicacion regresa a inicio');
     }catch (error) {
         console.log('Exisitio un error al reralizar el registro',error)
+        Alert.alert('Error','Ocurrio un error al realizar el registro')
     }
     }
 
