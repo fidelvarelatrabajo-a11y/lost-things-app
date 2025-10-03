@@ -36,12 +36,16 @@ export function GenerateReportPage (){
   };
     // Subir imagen a Firebase
   const uploadImageAsync = async (uri) => {
+    try{
     const response = await fetch(uri);
     const blob = await response.blob();
     const filename = Date.now() + ".jpg";
     const storageRef = ref(storage, "reports/" + filename);
 
     await uploadBytes(storageRef, blob);
+  }catch{
+    Alert.alert('Error','Hubo un error al subir imagen')
+  }
     return await getDownloadURL(storageRef);
   };
 
