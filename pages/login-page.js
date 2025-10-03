@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput } from "react-native-web";
+import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import { useState } from "react";
 import { styles } from "../styles/styles";
 import { Alert } from "react-native";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { styles } from "../styles/styles";
-import { Text,TextInput, TouchableOpacity,View } from "react-native-web";
+import { Text,TextInput, TouchableOpacity,View } from "react-native";
 import { doc, setDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth,db } from "../firebase";

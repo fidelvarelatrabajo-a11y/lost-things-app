@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, } from "react-native-web";
+import { View, Text, TouchableOpacity, } from "react-native";
 import { styles } from "../styles/styles";
 
 export function HomeScreen({ route, navigation }) {
