@@ -1,28 +1,11 @@
-import { 
-  View, 
-  Text, 
-} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LoginScreen } from './pages/login-page.js'
 import { RegisterPage } from './pages/registry-page.js'
-import { styles } from './styles/styles.js';
 import { HomeScreen } from './pages/home-page.js';
 import { GenerateReportPage } from './pages/generate-report.js';
+import { DetailsScreenPage } from './pages/details-screen-page.js'
 const Stack = createNativeStackNavigator();
-// Pantalla Home
-
-// Pantalla De Consulta Cosas perdias
-function DetailsScreenPage() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Estos son los objetos reportados</Text>
-    </View>
-  );
-}
-
-// Pantalla para hacer un reporte de cosas perdidas
-
 
 // App principal la cual realiza toda la navegacion
 export default function App() {
