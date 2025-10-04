@@ -5,7 +5,6 @@ import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
 import { db, storage } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 export function GenerateReportPage (){
     const [description, setDescription] = useState('')
     const [image, setImage] = useState(null);
