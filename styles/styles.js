@@ -80,5 +80,28 @@ export const styles = StyleSheet.create({
     borderRadius:8,
     width:'50%',
     alignItems:'center'
+  },
+    card: {
+    padding: 15,
+    marginBottom: 10,
+    backgroundColor: "#f1f1f1",
+    borderRadius: 8
+  },
+  textoTitulo: {
+    fontSize: 18,
+    fontWeight: "bold"
+  },
+  fecha: {
+    marginTop: 5,
+    fontSize: 12,
+    color: "gray"
+  },
+  buttonDetails: {
+    backgroundColor:'#4e9efc', 
+    padding:15, 
+    borderRadius:8, 
+    width:'100%', 
+    alignItems:'center',
+    marginTop:10,
   }
 });
