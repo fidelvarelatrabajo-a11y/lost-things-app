@@ -5,6 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
 import { db, storage } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
+import { Platform } from "react-native";
 export function GenerateReportPage (){
     const [description, setDescription] = useState('')
     const [image, setImage] = useState(null);
@@ -50,36 +51,50 @@ export function GenerateReportPage (){
 };
 
     // Subir imagen a Cloudinary
-  const uploadImageAsync = async (uri) => {
-  const UPLOAD_PRESET = 'lost_of_things';
-  const CLOUD_NAME = 'dz1bc5yta';
-  const blob = await uriToBlob(uri);
+const uploadImageAsync = async (uri) => {
+  const UPLOAD_PRESET = "lost_of_things";
+  const CLOUD_NAME = "dz1bc5yta";
+  const CLOUD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
+  const imageName = `foto_${Date.now()}.jpg`;
   const data = new FormData();
-  data.append('file',blob);
-  data.append('upload_preset', UPLOAD_PRESET);
+
+  // 👇 En móvil (React Native o Expo)
+  if (Platform.OS !== "web") {
+    data.append("file", {
+      uri,
+      type: "image/jpeg", // cambia si usas otro tipo
+      name: imageName,
+    });
+  } 
+  // 👇 En web
+  else {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    data.append("file", blob);
+  }
+
+  data.append("upload_preset", UPLOAD_PRESET);
+
   try {
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-      {
-        method: "POST",
-        body: data,
-      }
-    );
+    const response = await fetch(CLOUD_URL, {
+      method: "POST",
+      body: data,
+    });
+
     const json = await response.json();
 
     if (json.error) {
-      console.error("Error subiendo imagen a Cloudinary:", json.error);
+      console.error("❌ Error subiendo imagen a Cloudinary:", json.error);
       throw new Error(json.error.message);
     }
 
-    console.log("Imagen subida correctamente:", json.secure_url);
-    return json.secure_url; // URL pública de la imagen
-
+    console.log("✅ Imagen subida correctamente:", json.secure_url);
+    return json.secure_url;
   } catch (error) {
-    console.error("Error subiendo imagen:", error);
-    throw error; // para que puedas manejarlo donde llames la función
+    console.error("🚨 Error subiendo imagen:", error);
+    throw error;
   }
-  };
+};
 
   // Guardar reporte en Firestore
   const saveReport = async () => {
@@ -100,9 +115,15 @@ try{
 
     alert("Reporte guardado ✅");
     Alert.alert('Registro exitoso','Se realizo de manera correcta el registro del reporte');
+    description = '';
+    location = '';
+    image = null;
   }catch(e){
     console.log('Existio un error', e);
     Alert.alert('Error','Ocurrio un error al realizar el reporte');
+    description = '';
+    location = '';
+    image = null;
   }
   };
   return (
