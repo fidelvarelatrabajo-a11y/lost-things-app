@@ -117,9 +117,7 @@ try{
       location,
       createdAt: new Date(),
     });
-
-    alert("Reporte guardado ✅");
-    Alert.alert('Registro exitoso','Se realizo de manera correcta el registro del reporte');
+    Alert.alert('Registro exitoso ✅','Se realizo de manera correcta el registro del reporte');
     setInfo();
   }catch(e){
     console.log('Existio un error', e);
