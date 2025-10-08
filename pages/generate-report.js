@@ -49,7 +49,12 @@ export function GenerateReportPage (){
     xhr.send(null);
   });
 };
-
+//Limpiar inputs 
+const setInfo = ()=>{
+  setDescription('');
+  setLocation(null);
+  setImage(null);
+}
     // Subir imagen a Cloudinary
 const uploadImageAsync = async (uri) => {
   const UPLOAD_PRESET = "lost_of_things";
@@ -115,15 +120,11 @@ try{
 
     alert("Reporte guardado ✅");
     Alert.alert('Registro exitoso','Se realizo de manera correcta el registro del reporte');
-    description = '';
-    location = '';
-    image = null;
+    setInfo();
   }catch(e){
     console.log('Existio un error', e);
     Alert.alert('Error','Ocurrio un error al realizar el reporte');
-    description = '';
-    location = '';
-    image = null;
+    setInfo();
   }
   };
   return (

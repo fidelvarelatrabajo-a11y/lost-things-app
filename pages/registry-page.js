@@ -5,7 +5,7 @@ import { doc, setDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth,db } from "../firebase";
 
-import { collection, getDocs } from "firebase/firestore";
+
 
 
 
@@ -42,10 +42,22 @@ export function RegisterPage (){
         })
         console.log('Registro exitosoooooo');
         Alert.alert('Registro Exitoso', 'Para ingresar a la aplicacion regresa a inicio');
+        setInfo();
     }catch (error) {
         console.log('Exisitio un error al reralizar el registro',error)
-        Alert.alert('Error','Ocurrio un error al realizar el registro')
+        Alert.alert('Error','Ocurrio un error al realizar el registro');
+        setInfo();
     }
+    }
+
+    const setInfo = ()=>{
+        setName('');
+        setApellido('');
+        setEmail('');
+        setNoBoleta('');
+        setCarrera('');
+        setWhatsapp('');
+        setPassword('');
     }
 
     //Funcion que elimina los numeros
