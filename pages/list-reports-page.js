@@ -4,7 +4,7 @@ import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { styles } from "../styles/styles";
 import { db } from "../firebase";
 
-export function DetailsScreenPage() {
+export function ListReportPage({navigation}) {
   const [reportes, setReportes] = useState([]);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export function DetailsScreenPage() {
           <View style={styles.card}>
             <Text style={styles.textoTitulo}>Objeto Extraviado</Text>
             <Text>{item.description}</Text>
-            <TouchableOpacity style = {styles.buttonDetails} onPress={()=>{console.log('Hola amigoo')}}>
+            <TouchableOpacity style = {styles.buttonDetails} onPress={()=>{navigation.navigate('Detalle',{ id: item.id })}}>
                 <Text style={styles.buttonText}> Ver detalles </Text>
             </TouchableOpacity>
           </View>
