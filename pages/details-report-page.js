@@ -3,6 +3,7 @@ import { View, Text, ActivityIndicator, Image, Alert } from 'react-native';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { styles } from '../styles/styles'; 
+import { Marker } from 'react-native-maps';
 export function DetailScreen({ route }) {
   const { id } = route.params;
   const [item, setItem] = useState(null);
@@ -38,6 +39,11 @@ export function DetailScreen({ route }) {
       <Text style={styles.title}>Producto Extraviado</Text>
       <Text style = {styles.textDescription}>{item.description}</Text>
       <Image source={{ uri: item.imageUrl }} style={styles.image} />
+      <Text style={styles.textDescription}>El Objeto fue encontrado en: </Text>
+      <Marker
+        key={item.id}
+        coordinate={{latitude:item.location.latitude, longitude: item.location.longitude }}
+      />
     </View>
   );
 }
