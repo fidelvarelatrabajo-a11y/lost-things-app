@@ -103,5 +103,14 @@ export const styles = StyleSheet.create({
     width:'100%', 
     alignItems:'center',
     marginTop:10,
+  },
+  buttonDelete: {
+    backgroundColor:'#fc4e57ff', 
+    padding:15, 
+    borderRadius:8, 
+    width:'100%', 
+    alignItems:'center',
+    marginTop:10,
   }
+
 });

@@ -3,7 +3,6 @@ import { View, Text, ActivityIndicator, Image, Alert } from 'react-native';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { styles } from '../styles/styles'; 
-import { Marker } from 'react-native-maps';
 export function DetailScreen({ route }) {
   const { id } = route.params;
   const [item, setItem] = useState(null);

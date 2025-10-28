@@ -24,6 +24,13 @@ export function HomeScreen({ route, navigation }) {
         <Text style={styles.buttonText}>Realizar un reporte</Text>
     </TouchableOpacity>
       
+    <TouchableOpacity y 
+        style={styles.buttonHome} 
+        onPress={() => navigation.navigate('Mis Reportes')}
+      >
+        <Text style={styles.buttonText}> Mis Reportes </Text>
+    </TouchableOpacity>
+
     <TouchableOpacity 
         style={styles.buttonHome} 
         onPress={handleCloseSesion}

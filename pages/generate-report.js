@@ -3,7 +3,7 @@ import { styles } from "../styles/styles"
 import { useState } from "react"
 import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
-import { db, storage } from "../firebase";
+import { db, auth } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { Platform } from "react-native";
 export function GenerateReportPage (){
@@ -63,7 +63,7 @@ const uploadImageAsync = async (uri) => {
   const imageName = `foto_${Date.now()}.jpg`;
   const data = new FormData();
 
-  // 👇 En móvil (React Native o Expo)
+  //  En móvil (React Native o Expo)
   if (Platform.OS !== "web") {
     data.append("file", {
       uri,
@@ -71,7 +71,7 @@ const uploadImageAsync = async (uri) => {
       name: imageName,
     });
   } 
-  // 👇 En web
+  //  En web
   else {
     const response = await fetch(uri);
     const blob = await response.blob();
@@ -110,12 +110,13 @@ const uploadImageAsync = async (uri) => {
     }
 try{
   const imageUrl = await uploadImageAsync(image);
-
+  const user = auth.currentUser;
     await addDoc(collection(db, "reportes"), {
       description,
       imageUrl,
       location,
       createdAt: new Date(),
+      userId:user.uid
     });
     Alert.alert('Registro exitoso ✅','Se realizo de manera correcta el registro del reporte');
     setInfo();
