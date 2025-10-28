@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, Image, Alert } from 'react-native';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { styles } from '../styles/styles'; 
+import { styles } from '../styles/styles';
+import MapView, { Marker } from 'react-native-maps';
 export function DetailScreen({ route }) {
   const { id } = route.params;
   const [item, setItem] = useState(null);
@@ -17,11 +18,11 @@ export function DetailScreen({ route }) {
           setItem(docSnap.data());
         } else {
           console.log("No se encontró el documento");
-          Alert.alert('Upss','No se pudo recuperar el detalle')
+          Alert.alert('Upss', 'No se pudo recuperar el detalle')
         }
       } catch (error) {
         console.error("Error al obtener detalle:", error);
-        Alert.alert('Error','Ocurrio un error al tratar de obtener el detalle')
+        Alert.alert('Error', 'Ocurrio un error al tratar de obtener el detalle')
       } finally {
         setLoading(false);
       }
@@ -31,18 +32,30 @@ export function DetailScreen({ route }) {
   }, [id]);
 
   if (loading) return <ActivityIndicator size="large" color="#000" />;
-  if (!item) return <Text>No se encontró el artículo</Text>;
-  console.log('*****esta es la info*****',item)
+  if (!item) return <Text>No se encontró el Reporte</Text>;
+  console.log('*****esta es la info*****', item)
   return (
-    <View style={ styles.container }>
+    <View style={styles.container}>
       <Text style={styles.title}>Producto Extraviado</Text>
-      <Text style = {styles.textDescription}>{item.description}</Text>
+      <Text style={styles.textDescription}>{item.description}</Text>
       <Image source={{ uri: item.imageUrl }} style={styles.image} />
       <Text style={styles.textDescription}>El Objeto fue encontrado en: </Text>
-      <Marker
-        key={item.id}
-        coordinate={{latitude:item.location.latitude, longitude: item.location.longitude }}
-      />
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude:item.location?.latitude || 19.432608,
+          longitude: item.location?.longitude || -99133209,
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
+        }}
+      >
+        <Marker
+          key={item.id}
+          coordinate={{ latitude: item.location.latitude, longitude: item.location.longitude }}
+        />
+      </MapView>
+      style={ }
+
     </View>
   );
 }

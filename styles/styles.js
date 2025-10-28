@@ -111,6 +111,9 @@ export const styles = StyleSheet.create({
     width:'100%', 
     alignItems:'center',
     marginTop:10,
+  },
+  map:{
+    flex:1
   }
 
 });
