@@ -40,20 +40,25 @@ export function DetailScreen({ route }) {
       <Text style={styles.textDescription}>{item.description}</Text>
       <Image source={{ uri: item.imageUrl }} style={styles.image} />
       <Text style={styles.textDescription}>El Objeto fue encontrado en: </Text>
+      {item?.location?.latitude && item?.location?. longitude ?(
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude:item.location?.latitude || 19.432608,
-          longitude: item.location?.longitude || -99133209,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
+          latitude:item?.location?.latitude,
+          longitude: item?.location?.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
         }}
       >
         <Marker
-          key={item.id}
-          coordinate={{ latitude: item.location.latitude, longitude: item.location.longitude }}
+          coordinate={{ 
+            latitude: item.location.latitude, 
+            longitude: item.location.longitude }}
+          title='Mapa'
         />
-      </MapView>
+      </MapView>):(
+        <Text> No hay coordenadas Registradas para este objeto </Text>
+      )}
 
     </View>
   );
