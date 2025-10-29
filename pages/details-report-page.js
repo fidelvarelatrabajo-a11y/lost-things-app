@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator, Image, Alert } from 'react-native';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { styles } from '../styles/styles';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_DEFAULT } from 'react-native-maps';
 export function DetailScreen({ route }) {
   const { id } = route.params;
   const [item, setItem] = useState(null);
@@ -50,6 +50,7 @@ export function DetailScreen({ route }) {
       <Text style={styles.textDescription}>El Objeto fue encontrado en: </Text>
       {item?.location?.latitude && item?.location?.longitude ? (
         <MapView
+          provider={PROVIDER_DEFAULT}
           style={styles.map}
           initialRegion={{
             latitude: item?.location?.latitude,
