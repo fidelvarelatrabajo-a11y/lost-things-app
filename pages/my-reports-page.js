@@ -36,10 +36,10 @@ export function MyReports({navigation}) {
     }
   }
   const confirmarEliminacion =(id)=>{
-    Alert.alert("Eliminar Reporte","¿Seguro que quieres eliminar este reporte?"),[
+    Alert.alert("Eliminar Reporte","¿Seguro que quieres eliminar este reporte?",[
         { text:"Cancelar", style:"cancel" },
-        { text: "Eliminar", style:"destructive", onPress: ()=>{eliminarReporte(id)}}
-    ]
+        { text: "Eliminar", style:"destructive", onPress: ()=> eliminarReporte(id)}
+    ]);
   }
   return (
     <View style={styles.container}>
