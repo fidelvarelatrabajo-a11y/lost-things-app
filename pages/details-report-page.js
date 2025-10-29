@@ -54,7 +54,6 @@ export function DetailScreen({ route }) {
           coordinate={{ latitude: item.location.latitude, longitude: item.location.longitude }}
         />
       </MapView>
-      style={ }
 
     </View>
   );
