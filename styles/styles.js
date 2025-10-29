@@ -113,7 +113,9 @@ export const styles = StyleSheet.create({
     marginTop:10,
   },
   map:{
-    flex:1
+    width:'100%',
+    height:250,
+    borderRadius: 10,
   }
 
 });

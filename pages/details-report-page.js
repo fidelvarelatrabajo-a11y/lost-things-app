@@ -31,32 +31,41 @@ export function DetailScreen({ route }) {
     fetchDetail();
   }, [id]);
 
-  if (loading) return <ActivityIndicator size="large" color="#000" />;
+  if (loading) {
+    return (
+      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>);
+  }
   if (!item) return <Text>No se encontró el Reporte</Text>;
   console.log('*****esta es la info*****', item)
+  console.log('Coordenadas recuperadas', item?.location);
+  console.log('Tipo de dato latitude:', typeof item?.location?.latitude)
+  console.log('Tipo de Longitud', typeof item?.location.longitude)
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Producto Extraviado</Text>
       <Text style={styles.textDescription}>{item.description}</Text>
       <Image source={{ uri: item.imageUrl }} style={styles.image} />
       <Text style={styles.textDescription}>El Objeto fue encontrado en: </Text>
-      {item?.location?.latitude && item?.location?. longitude ?(
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude:item?.location?.latitude,
-          longitude: item?.location?.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-        }}
-      >
-        <Marker
-          coordinate={{ 
-            latitude: item.location.latitude, 
-            longitude: item.location.longitude }}
-          title='Mapa'
-        />
-      </MapView>):(
+      {item?.location?.latitude && item?.location?.longitude ? (
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: item?.location?.latitude,
+            longitude: item?.location?.longitude,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }}
+        >
+          <Marker
+            coordinate={{
+              latitude: item.location.latitude,
+              longitude: item.location.longitude
+            }}
+            title='Mapa'
+          />
+        </MapView>) : (
         <Text> No hay coordenadas Registradas para este objeto </Text>
       )}
 
